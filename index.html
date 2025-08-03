@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CelestaKim GIS - A Colorful Geospatial Showcase</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- Root Variables and Color Palette --- */
+        :root {
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
+            --accent-color-1: #fd1d1d;
+            --accent-color-2: #fcb045;
+            --background-color: #f0f2f5;
+            --card-background: #ffffff;
+            --text-color-dark: #333;
+            --text-color-light: #666;
+            --header-color: #1a237e;
+            --border-color: #e9ecef;
+            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --shadow-strong: 0 8px 25px rgba(0, 0, 0, 0.2);
+            --nav-bg: linear-gradient(45deg, #6a11cb, #2575fc);
+            --nav-item-color: rgba(255, 255, 255, 0.7);
+            --nav-item-active-color: #fff;
+            --nav-glow-color: #fff;
+        }
+
+        /* --- Global & Base Styles --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color-dark);
+            line-height: 1.8;
+            overflow-x: hidden;
+            background: linear-gradient(to right, #f8c0c9, #e0d0f5);
+            background-attachment: fixed;
+        }
+        
+        /* General content wrapper with some spacing */
+        .main-content {
+            padding: 20px;
+            padding-bottom: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Styling for all main sections */
+        .content-section {
+            display: none;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: var(--shadow-light);
+            animation: fadeInScale 1s ease-out forwards;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes bounceIn {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes rotateIn {
+            from { transform: rotate(-360deg) scale(0); opacity: 0; }
+            to { transform: rotate(0) scale(1); opacity: 1; }
+        }
+
+        /* Headings */
+        h1, h2, h3 {
+            font-weight: 700;
+            color: var(--header-color);
+            text-align: center;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        h1::after, h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color-1);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- Home Section --- */
+        .home-content {
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            animation: slideInLeft 1s ease-out;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-color-light);
+            margin-bottom: 30px;
+            animation: slideInRight 1s ease-out;
+        }
+
+        .video-placeholder {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-strong);
+            animation: fadeInScale 1.2s ease-out;
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+        }
+        
+        .video-placeholder video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* --- About Section --- */
+        .about-portfolio {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .profile-img-container {
+            flex-shrink: 0;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 8px solid var(--primary-color);
+            box-shadow: var(--shadow-strong);
+            animation: bounceIn 2s infinite;
+            margin: 0 auto;
+        }
+
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(10%);
+            transition: filter 0.5s ease;
+        }
+        
+        .profile-img-container img:hover {
+            filter: grayscale(0%);
+        }
+
+        .portfolio-details {
+            flex-grow: 1;
+        }
+
+        .portfolio-details h2 {
+            text-align: left;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .portfolio-details h2::after {
+            margin: 5px 0 0;
+        }
+
+        .portfolio-details p {
+            color: var(--text-color-light);
+        }
+
+        .portfolio-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .portfolio-details ul li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: var(--text-color-dark);
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .portfolio-details ul li i {
+            margin-right: 15px;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .skill-list span {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease;
+        }
+        
+        .skill-list span:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+        }
+
+        /* --- Services Section --- */
+        .services-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--card-background);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: var(--shadow-strong);
+        }
+        
+        .service-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .service-card .icon-container {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color-2));
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            font-size: 3rem;
+            animation: rotateIn 1s ease-out;
+            box-shadow: var(--shadow-light);
+        }
+
+        .service-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.4rem;
+        }
+
+        /* --- Gallery Section --- */
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .gallery-item {
+            background: var(--card-background);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .gallery-caption::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption::before {
+            opacity: 1;
+        }
+
+        .gallery-caption h4 {
+            margin: 0 0 5px;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        
+        .gallery-caption p {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text-color-light);
+        }
+
+        /* --- Clients & Terms Section --- */
+        .client-comments-grid, .terms-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .client-comment-card, .terms-list li {
+            background: var(--card-background);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+        }
+        
+        .client-comment-card::before, .terms-list li::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            opacity: 0.1;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+        
+        .client-comment-card:hover::before, .terms-list li:hover::before {
+            background: var(--secondary-color);
+            opacity: 0.2;
+        }
+
+        .client-comment-card p {
+            font-style: italic;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+            color: var(--text-color-dark);
+        }
+
+        .client-comment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .terms-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .terms-list li {
+            text-align: left;
+            display: flex;
+            align-items: center;
+        }
+
+        .terms-list li i {
+            margin-right: 15px;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .terms-list li:nth-child(even) i {
+            color: var(--secondary-color);
+        }
+
+        /* --- Contact Section --- */
+        .contact-form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-form-container h2 {
+            color: var(--primary-color);
+        }
+
+        .form-iframe-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding-top: 100%;
+            height: 0;
+            border-radius: 20px;
+            box-shadow: var(--shadow-strong);
+        }
+        
+        .form-iframe-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* --- Modern Bottom Navigation Bar --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 600px;
+            height: 70px;
+            background: var(--nav-bg);
+            border-radius: 25px 25px 0 0;
+            box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.25);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+            border-top: 3px solid #fff;
+        }
+        
+        .nav-link {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--nav-item-color);
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            height: 100%;
+            padding-top: 10px;
+        }
+
+        .nav-link i {
+            font-size: 1.6rem;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .nav-link span {
+            font-size: 0.8rem;
+            white-space: nowrap;
+            margin-top: 5px;
+            opacity: 1;
+            color: var(--nav-item-color);
+            transition: all 0.4s ease;
+        }
+
+        .nav-link.active,
+        .nav-link:hover {
+            color: var(--nav-item-active-color);
+        }
+
+        .nav-link.active i {
+            transform: translateY(-8px) scale(1.2);
+            text-shadow: 0 0 15px var(--nav-glow-color), 0 0 25px var(--nav-glow-color);
+        }
+        
+        .nav-link.active span {
+            transform: translateY(0);
+            color: var(--nav-item-active-color);
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 5px;
+            background-color: var(--accent-color-2);
+            border-radius: 0 0 5px 5px;
+            transition: width 0.4s ease-in-out;
+            opacity: 0;
+        }
+        
+        .nav-link.active::before {
+            width: 100%;
+            opacity: 1;
+        }
+
+        /* --- Floating WhatsApp Button --- */
+        .whatsapp-chat-button {
+            position: fixed;
+            bottom: 90px;
+            right: 25px;
+            background: #25d366;
+            color: #fff;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: var(--shadow-strong);
+            cursor: pointer;
+            z-index: 1001;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            animation: pulse 2s infinite;
+        }
+        
+        .whatsapp-chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        .whatsapp-chat-container {
+            position: fixed;
+            bottom: 160px;
+            right: 25px;
+            width: 350px;
+            background: var(--card-background);
+            border-radius: 15px;
+            box-shadow: var(--shadow-strong);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            animation: fadeInScale 0.6s ease-out;
+            border: 2px solid var(--secondary-color);
+        }
+
+        /* --- Chatbox Styles (Enhanced) --- */
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: #fff;
+            border-top-left-radius: 13px;
+            border-top-right-radius: 13px;
+        }
+
+        .chat-header h3 {
+            margin: 0;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .chat-header .close-btn {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .chat-header .close-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .chat-messages {
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            background: #eef1f6;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 18px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+
+        .message.received {
+            background: #dcf8c6;
+            color: var(--text-color-dark);
+            text-align: left;
+            border-bottom-left-radius: 5px;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 15px 20px;
+            align-items: center;
+        }
+
+        .chat-input input {
+            flex: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            padding: 10px 18px;
+            margin-right: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .chat-input input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .chat-input button {
+            background: var(--secondary-color);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .chat-input button:hover {
+            background: var(--primary-color);
+            transform: scale(1.1);
+        }
+        
+        /* --- Footer Styling --- */
+        .site-footer {
+            background: var(--nav-bg);
+            color: var(--nav-item-color);
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: 1rem;
+            margin-top: 40px;
+            border-top: 3px solid #fff;
+        }
+
+        .site-footer a {
+            color: var(--nav-item-active-color);
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        .site-footer a:hover {
+            color: var(--accent-color-2);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .about-portfolio {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-img-container {
+                width: 250px;
+                height: 250px;
+            }
+            .portfolio-details h2 {
+                text-align: center;
+            }
+            .portfolio-details h2::after {
+                margin: 5px auto 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            .bottom-nav {
+                width: 100%;
+                border-radius: 0;
+                left: 0;
+                transform: translateX(0);
+                border-top: none;
+            }
+            .nav-link i {
+                font-size: 1.4rem;
+            }
+            .nav-link span {
+                font-size: 0.75rem;
+            }
+            .content-section {
+                padding: 40px 15px;
+            }
+            .whatsapp-chat-container {
+                width: 90%;
+                right: 5%;
+                bottom: 80px;
+            }
+            .whatsapp-chat-button {
+                bottom: 80px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-content" id="main-content">
+        <div id="home" class="content-section active">
+            <div class="home-content">
+                <h1 class="hero-title">Your GIS Success. Our Top Priority.</h1>
+                <p class="hero-subtitle">Transform your projects with professional GIS expertise and cutting-edge web solutions.</p>
+                <div class="video-placeholder">
+                    <video width="100%" height="100%" autoplay muted loop playsinline>
+
+                        <source src="Media1.mp4" type="video/mp4">
+                        <h2 class="hero-title"><button>CELESTAKIM018@GMAIL.COM</button></h2>
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+        
+        <div id="about" class="content-section">
+            <h2 style="text-align: center;">About CelestaKim GIS</h2>
+            <div class="about-portfolio">
+                <div class="profile-img-container">
+                    <img src="mm.png" alt="Kimathi Joram (Celesta Kim) Profile">
+                </div>
+                <div class="portfolio-details">
+                    <h2>Kimathi Joram (Celesta Kim)</h2>
+                    <p>Geospatial Engineer & Web Developer</p>
+                    <p>Ready to bring your ideas to life. Let's create something impactful together!</p>
+                    
+                    <h4><i class="fas fa-phone-alt"></i> Connect with Me</h4>
+                    <ul>
+                        <li><i class="fas fa-phone-square"></i> Phone: +254101370035</li>
+                        <li><i class="fab fa-whatsapp-square"></i> WhatsApp: <a href="https://wa.me/254101370035" target="_blank">wa.me/254101370035</a></li>
+                        <li><i class="fab fa-linkedin"></i> LinkedIn: <a href="https://linkedin.com/in/celesta-kim-21020232b" target="_blank">linkedin.com/in/celesta-kim-21020232b</a></li>
+                        <li><i class="fab fa-github"></i> GitHub: <a href="https://github.com/CELESTAKIM" target="_blank">github.com/CELESTAKIM</a></li>
+                        <li><i class="fas fa-link"></i> ResearchGate: <a href="https://researchgate.net/profile/Kimathi-Joram" target="_blank">researchgate.net/profile/Kimathi-Joram</a></li>
+                    </ul>
+
+                    <h4><i class="fas fa-tools"></i> Expert GIS Tools & Software</h4>
+                    <p class="skill-list">
+                        <span>ArcGIS Pro</span><span>ArcMap</span><span>QGIS</span><span>QFIELD</span><span>ERDAS Imagine</span><span>ENVI</span><span>Agisoft</span><span>Google Earth Engine (GEE)</span>
+                        <span>AutoCAD</span><span>Archicad</span><span>RTK GPS</span><span>Total Station</span><span>Dumpy Level</span>
+                        <span>KoboToolbox</span><span>Google Forms</span><span>Google Sheets</span>
+                        <span>Jupyter Notebook</span><span>Google Colab</span><span>Anaconda</span><span>PyCharm</span><span>VSCode</span>
+                        <span>OBS Studio</span><span>CapCut</span><span>Canva</span>
+                    </p>
+
+                    <h4><i class="fas fa-code"></i> Technical Skills</h4>
+                    <p><strong>GIS & Cartography:</strong> Contour line drawing, LULC analysis, NDVI analysis, Site suitability modeling, Road design cross-sections.</p>
+                    <p><strong>Programming Languages:</strong> Python (Advanced), JavaScript (Advanced), HTML (Advanced), CSS (Advanced), PHP, Java.</p>
+                    <p><strong>Web Development:</strong> Frontend Web Development, React, Flask, Interactive map development (Leaflet.js, GeoJSON).</p>
+                    <p><strong>Machine Learning & AI:</strong> Crop health monitoring, TensorFlow for image classification.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="services" class="content-section">
+            <div class="services-header">
+                <h1>Our Professional GIS Services</h1>
+                <p>At CelestaKim GIS, we turn complex spatial data into actionable insights. Discover how our expertise can accelerate your success.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon-container"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>Academic Projects & Assignments</h3>
+                    <p>Get expert guidance to ace your academic GIS projects and assignments with confidence.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-container"><i class="fas fa-map-marked-alt"></i></div>
+                    <h3>Stunning Map Making & Cartography</h3>
+                    <p>We create beautiful, high-quality maps that tell your story with unparalleled clarity and detail.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-container"><i class="fas fa-ruler-combined"></i></div>
+                    <h3>Precision Cartographic Corrections</h3>
+                    <p>Ensure your maps are flawless with our meticulous attention to detail on legends, scales, and more.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-container"><i class="fas fa-chart-area"></i></div>
+                    <h3>Insightful Geospatial Analysis</h3>
+                    <p>Uncover hidden patterns and make data-driven decisions with our advanced spatial analysis techniques.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-container"><i class="fas fa-database"></i></div>
+                    <h3>Efficient Geodatabase Management</h3>
+                    <p>We design and manage powerful geodatabases to keep your spatial data organized and accessible.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-container"><i class="fas fa-satellite-dish"></i></div>
+                    <h3>Advanced Remote Sensing & Analysis</h3>
+                    <p>Leverage the power of satellite imagery for land use classification, change detection, and monitoring.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-container"><i class="fas fa-globe-americas"></i></div>
+                    <h3>Interactive Web Mapping Solutions</h3>
+                    <p>Share your data with the world through engaging and user-friendly web maps and GIS applications.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-container"><i class="fas fa-search-location"></i></div>
+                    <h3>Accurate GPS Data Collection</h3>
+                    <p>From the field to the map, we handle all aspects of GPS data collection and processing for precision mapping.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="gallery" class="content-section">
+            <div class="gallery-header">
+                <h1>Our Project Showcase</h1>
+                <p>Explore some of the impactful projects we've delivered to satisfied clients.</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="image1.png" alt="Project image 1">
+                    <div class="gallery-caption">
+                        <h4>Land Use Analysis</h4>
+                        <p>Detailed classification of land use for urban planning.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="image2.png" alt="Project image 2">
+                    <div class="gallery-caption">
+                        <h4>Drone image processing </h4>
+                        <p>PROCESSING DRONE IMAGES AND EXTRACTING DEM, DSM, DTM FROM THEM </p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="image.png" alt="Project image 2">
+                    <div class="gallery-caption">
+                        <h4>WATERSHED DELINIATION IN QGIS, ARCGISPRO </h4>
+                        <p>BASINS INCLUDING ATHI RIVER, RIVER TANA  </p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="image3.png" alt="Network Analysis Nairobi">
+                    <div class="gallery-caption">
+                        <h4>Optimizing Transport Networks in Nairobi</h4>
+                        <p>Analyzing shortest paths and service areas to improve logistics and traffic flow across the city.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="image5.png" alt="Project image 3">
+                    <div class="gallery-caption">
+                        <h4>Hydrological Modeling</h4>
+                        <p>Flooding in Garissa Bridge 2024 rains</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="image4.png" alt="Project image 4">
+                    <div class="gallery-caption">
+                        <h4>LULC CHANGE DETECTION </h4>
+                        <p>KERICHO COUNTY KENYA A CHANGE B2N 1985 AND 2025</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="image7.jpg" alt="Project image 5">
+                    <div class="gallery-caption">
+                        <h4>Interactive Web Map</h4>
+                        <p>A dynamic web map for visualizing public health data.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="qq.jpg" alt="Project image 6">
+                    <div class="gallery-caption">
+                        <h4>Site Suitability Analysis</h4>
+                        <p>Identifying the best locations for a new business based on multiple criteria.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="clients" class="content-section">
+            <h1>What Our Clients Say</h1>
+            <p style="text-align: center; margin-bottom: 2rem;">Real feedback from people who have experienced our exceptional service.</p>
+            <div class="client-comments-grid">
+                <div class="client-comment-card">
+                    <p>"Wow, what incredible work! I'm truly impressed with the results. 🙌"</p>
+                </div>
+                <div class="client-comment-card">
+                    <p>"This is even better than I imagined! Absolutely amazing. 😄"</p>
+                </div>
+                <div class="client-comment-card">
+                    <p>"Next week, I'll send you payment for the great work you did. 👍"</p>
+                </div>
+                <div class="client-comment-card">
+                    <p>"The work is so good, I'm confident the payment will be in my M-Pesa this week. 💰"</p>
+                </div>
+                <div class="client-comment-card">
+                    <p>"Send me your number on Sunday. I want to buy you some chai as a thank you. ☕"</p>
+                </div>
+                <div class="client-comment-card">
+                    <p>"Please send me your number so I can pay for the first task. We'll handle today's job later. 🙂"</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="terms" class="content-section">
+            <h1>Our Terms & Conditions</h1>
+            <ul class="terms-list">
+                <li><i class="fas fa-clock"></i> We can chat on WhatsApp, but please no spam! Your time is valuable, and so is mine. ⏰</li>
+                <li><i class="fas fa-lock"></i> All data provided is strictly private and confidential. Your information is safe with me. 🔒</li>
+                <li><i class="fas fa-handshake"></i> A deposit is required to kick off a project. This helps me secure materials and allocate dedicated time to your task. 🤝</li>
+                <li><i class="fas fa-calendar-alt"></i> Deadlines are more expensive the earlier they are. The more time you give, the more affordable the project will be. 🗓️</li>
+                <li><i class="fas fa-rocket"></i> I guarantee a response within 42 hours of receiving your inquiry. Your project is a priority! 🚀</li>
+                <li><i class="fas fa-check-circle"></i> If you are contacted by celestakim018@gmail.com, please contact me via WhatsApp or email to verify. This is to ensure secure communication. ✅</li>
+                <li><i class="fas fa-pen-square"></i> And many more... details will be provided upon project initiation. 📝</li>
+            </ul>
+        </div>
+
+        <div id="contact" class="content-section">
+            <div class="contact-form-container">
+                <h2>Ready to Start a Project?</h2>
+                <p>Fill out the form below with your task details and I will get back to you as soon as possible!</p>
+                <div class="form-iframe-wrapper">
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScQLniPkEyBznZpq5eiOEcB4Ds4dsRK4d5-WXTGImaFIE-Gng/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <p>Visit our main website at <a href="https://celestakim.github.io/KIM7/" target="_blank">celestakim.com</a></p>
+        <p>&copy; 2024 CelestaKim GIS. All rights reserved.</p>
+        <p>&copy; SEE YOU WHEN YOU SEE ME</p>
+       
+    </footer>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-link active" data-target="home">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-link" data-target="about">
+            <i class="fas fa-user-circle"></i>
+            <span>About</span>
+        </a>
+        <a href="#" class="nav-link" data-target="services">
+            <i class="fas fa-toolbox"></i>
+            <span>Services</span>
+        </a>
+        <a href="#" class="nav-link" data-target="gallery">
+            <i class="fas fa-images"></i>
+            <span>Work</span>
+        </a>
+        <a href="#" class="nav-link" data-target="clients">
+            <i class="fas fa-users"></i>
+            <span>Clients</span>
+        </a>
+        <a href="#" class="nav-link" data-target="terms">
+            <i class="fas fa-file-contract"></i>
+            <span>Terms</span>
+        </a>
+        <a href="#" class="nav-link" data-target="contact">
+            <i class="fas fa-paper-plane"></i>
+            <span>Contact</span>
+        </a>
+    </nav>
+
+
+    <div class="whatsapp-chat-button" onclick="toggleChat()">
+        <i class="fab fa-whatsapp fa-2x"></i>
+    </div>
+
+    <div id="whatsapp-chat-box" class="whatsapp-chat-container">
+        <div class="chat-header">
+            <h3>Start a Chat</h3>
+            <button class="close-btn" onclick="toggleChat()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-messages">
+            <p class="message received">Hello there! How can I assist you with your GIS and web development needs today? 😊</p>
+        </div>
+        <div class="chat-input">
+            <input type="text" placeholder="Type your message..." id="chat-input-field">
+            <button onclick="sendWhatsappMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            const mainContent = document.getElementById('main-content');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('data-target');
+                    const targetSection = document.getElementById(targetId);
+
+                    if (targetSection) {
+                        // Remove active class from all links and sections
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        contentSections.forEach(section => {
+                            section.classList.remove('active');
+                        });
+                        
+                        // Add active class to clicked link and target section
+                        link.classList.add('active');
+                        targetSection.classList.add('active');
+
+                        // Scroll the main content to the top
+                        mainContent.scrollTop = 0;
+                    }
+                });
+            });
+        });
+
+        function toggleChat() {
+            const chatBox = document.getElementById('whatsapp-chat-box');
+            const chatButton = document.querySelector('.whatsapp-chat-button');
+            if (chatBox.style.display === 'flex') {
+                chatBox.style.display = 'none';
+                chatButton.style.display = 'flex';
+            } else {
+                chatBox.style.display = 'flex';
+                chatButton.style.display = 'none';
+            }
+        }
+
+        function sendWhatsappMessage() {
+            const phoneNumber = '254101370035';
+            const inputField = document.getElementById('chat-input-field');
+            const message = inputField.value;
+
+            if (message) {
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+                inputField.value = '';
+            }
+        }
+    </script>
+</body>
+</html>
